@@ -18,18 +18,23 @@ extension InvoiceData {
             <tbody>
         """
         for item in content {
-            let indent = item.parentId != nil ? "&nbsp;&nbsp;&nbsp;&nbsp;" : ""
+            let rowClass = item.parentId != nil ? "child-item" : ""
             let rateMag = String(format: "%.2f", abs(item.rate))
-            let rateStr = item.rate < 0 ? "(€\(rateMag))" : "€\(rateMag)"
+            let rateStr = item.rate < 0
+                ? "(€\(rateMag))"
+                : "€\(rateMag)"
             let subtotalMag = String(format: "%.2f", abs(item.subtotal))
-            let subtotalStr = item.subtotal < 0 ? "(€\(subtotalMag))" : "€\(subtotalMag)"
+            let subtotalStr = item.subtotal < 0
+                ? "(€\(subtotalMag))"
+                : "€\(subtotalMag)"
+
             html += """
-                    <tr>
-                        <td style="padding:4px;">\(indent)\(item.name)</td>
-                        <td style="text-align:center; padding:4px;">\(item.count)</td>
-                        <td style="text-align:right; padding:4px;">\(rateStr)</td>
-                        <td style="text-align:right; padding:4px;">\(subtotalStr)</td>
-                    </tr>
+            <tr class="\(rowClass)">
+              <td style="padding:4px;">\(item.name)</td>
+              <td style="text-align:center; padding:4px;">\(item.count)</td>
+              <td style="text-align:right; padding:4px;">\(rateStr)</td>
+              <td style="text-align:right; padding:4px;">\(subtotalStr)</td>
+            </tr>
             """
         }
         html += """
