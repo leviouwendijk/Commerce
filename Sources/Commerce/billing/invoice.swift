@@ -60,13 +60,16 @@ public struct InvoiceLineItem: Identifiable, Sendable {
 
 public struct InvoicePayment: Identifiable, Sendable {
     public let id: UUID
+    public let details: String
     public let amount: Double
     
     public init(
         id: UUID = UUID(),
+        details: String,
         amount: Double
     ) {
         self.id = id
+        self.details = details
         self.amount = amount.orient(to: .credit)
     }
 }

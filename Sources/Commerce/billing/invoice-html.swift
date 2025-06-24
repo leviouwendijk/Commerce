@@ -43,61 +43,58 @@ extension InvoiceData {
             html += """
             <p class="emphasis-title" style="margin-top:24px;"><i>Betalingen</i></p>
             <table style="width:100%; font-size:12px; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th style="text-align:left; padding:4px;">Omschrijving</th>
-                        <th style="text-align:right; padding:4px;">Bedrag</th>
-                    </tr>
-                </thead>
-                <tbody>
+              <thead>
+                <tr>
+                  <th style="text-align:left; padding:4px;">Omschrijving</th>
+                  <th style="text-align:right; padding:4px;">Bedrag</th>
+                </tr>
+              </thead>
+              <tbody>
             """
-            for (index, payment) in payments.enumerated() {
-                let payMag = String(format: "%.2f", abs(payment.amount))
-                let payStr = payment.amount < 0 ? "(€\(payMag))" : "€\(payMag)"
+            for payment in payments {
+                let amtMag = String(format: "%.2f", abs(payment.amount))
+                let amtStr = payment.amount < 0 ? "(€\(amtMag))" : "€\(amtMag)"
                 html += """
-                        <tr>
-                            <td style="padding:4px;">Betaling \(index + 1)</td>
-                            <td style="text-align:right; padding:4px;">\(payStr)</td>
-                        </tr>
+                  <tr>
+                    <td style="padding:4px;">\(payment.details)</td>
+                    <td style="text-align:right; padding:4px;">\(amtStr)</td>
+                  </tr>
                 """
             }
             html += """
-                </tbody>
+              </tbody>
             </table>
             
             """
         }
 
+        // Samenvatting
         html += """
         <p class="emphasis-title" style="margin-top:24px;"><i>Samenvatting</i></p>
         <table style="width:100%; font-size:12px; border-collapse: collapse;">
-            <tr>
-                <td style="font-weight:500; padding:4px;">Som geleverde goederen en diensten</td>
-        """
-        let netMag = String(format: "%.2f", abs(netTotal))
-        let netStr = netTotal < 0 ? "(€\(netMag))" : "€\(netMag)"
-        html += """
-                <td style="text-align:right; padding:4px;">\(netStr)</td>
-            </tr>
+          <tr>
+            <td style="font-weight:500; padding:4px;">Som geleverde goederen en diensten</td>
+            <td style="text-align:right; padding:4px;">\(netTotal < 0 ? "(€\(String(format: "%.2f", abs(netTotal)))" : "€\(String(format: "%.2f", netTotal))")</td>
+          </tr>
         """
         if !payments.isEmpty {
             let paidMag = String(format: "%.2f", abs(paymentTotal))
             let paidStr = paymentTotal < 0 ? "(€\(paidMag))" : "€\(paidMag)"
             html += """
-            <tr>
+              <tr>
                 <td style="font-weight:500; padding:4px;">Reeds voldane betalingen</td>
                 <td style="text-align:right; padding:4px;">\(paidStr)</td>
-            </tr>
+              </tr>
             """
         }
         let finalMag = String(format: "%.2f", abs(finalBalance))
         let finalStr = finalBalance < 0 ? "(€\(finalMag))" : "€\(finalMag)"
-        let label = finalBalance >= 0 ? "Te betalen" : "Te ontvangen"
+        let label    = finalBalance >= 0 ? "Te betalen" : "Te ontvangen"
         html += """
-            <tr>
-                <td style="font-weight:700; padding:4px;">\(label)</td>
-                <td style="text-align:right; font-weight:700; padding:4px;">\(finalStr)</td>
-            </tr>
+          <tr>
+            <td style="font-weight:700; padding:4px;">\(label)</td>
+            <td style="text-align:right; font-weight:700; padding:4px;">\(finalStr)</td>
+          </tr>
         </table>
         """
 
