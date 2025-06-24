@@ -97,8 +97,8 @@ extension InvoiceData {
         <p class="emphasis-title" style="margin-top:24px;"><i>Samenvatting</i></p>
         <table class="final-overview-table">
           <tr>
-            <td style="font-weight:500; padding:4px;">Som leverbare goederen en diensten</td>
-            <td style="text-align:right; padding:4px;">\(netTotal < 0 ? "(€\(String(format: "%.2f", abs(netTotal)))" : "€\(String(format: "%.2f", netTotal))")</td>
+            <td style="font-weight:500;">Som leverbare goederen en diensten</td>
+            <td style="text-align:right;">\(netTotal < 0 ? "(€\(String(format: "%.2f", abs(netTotal)))" : "€\(String(format: "%.2f", netTotal))")</td>
           </tr>
         """
         if !payments.isEmpty {
@@ -106,8 +106,8 @@ extension InvoiceData {
             let paidStr = paymentTotal < 0 ? "(€\(paidMag))" : "€\(paidMag)"
             html += """
               <tr>
-                <td style="font-weight:500; padding:4px;">Reeds voldane betalingen</td>
-                <td style="text-align:right; padding:4px;">\(paidStr)</td>
+                <td style="font-weight:500;">Reeds voldane betalingen</td>
+                <td style="text-align:right;">\(paidStr)</td>
               </tr>
             """
         }
@@ -116,8 +116,8 @@ extension InvoiceData {
         let label    = finalBalance >= 0 ? "Te betalen" : "Te ontvangen"
         html += """
           <tr>
-            <td style="font-weight:700; padding:4px;">\(label)</td>
-            <td style="text-align:right; font-weight:700; padding:4px;">\(finalStr)</td>
+            <td style="font-weight:700;">\(label)</td>
+            <td style="text-align:right; font-weight:700;">\(finalStr)</td>
           </tr>
         </table>
         """
