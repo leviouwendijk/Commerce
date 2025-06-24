@@ -4,7 +4,6 @@ extension InvoiceData {
     public var invoiceDataHTML: String {
         var html = ""
         
-        // Line items
         html += """
         <p class="emphasis-title"><i>Specificatie</i></p>
         <table style="width:100%; font-size:12px; border-collapse: collapse;">
@@ -20,12 +19,16 @@ extension InvoiceData {
         """
         for item in content {
             let indent = item.parentId != nil ? "&nbsp;&nbsp;&nbsp;&nbsp;" : ""
+            let rateMag = String(format: "%.2f", abs(item.rate))
+            let rateStr = item.rate < 0 ? "(€\(rateMag))" : "€\(rateMag)"
+            let subtotalMag = String(format: "%.2f", abs(item.subtotal))
+            let subtotalStr = item.subtotal < 0 ? "(€\(subtotalMag))" : "€\(subtotalMag)"
             html += """
                     <tr>
                         <td style="padding:4px;">\(indent)\(item.name)</td>
                         <td style="text-align:center; padding:4px;">\(item.count)</td>
-                        <td style="text-align:right; padding:4px;">€\(String(format: "%.2f", abs(item.rate)))</td>
-                        <td style="text-align:right; padding:4px;">€\(String(format: "%.2f", abs(item.subtotal)))</td>
+                        <td style="text-align:right; padding:4px;">\(rateStr)</td>
+                        <td style="text-align:right; padding:4px;">\(subtotalStr)</td>
                     </tr>
             """
         }
@@ -35,7 +38,6 @@ extension InvoiceData {
         
         """
 
-        // Payments
         if !payments.isEmpty {
             html += """
             <p class="emphasis-title" style="margin-top:24px;"><i>Betalingen</i></p>
@@ -49,10 +51,12 @@ extension InvoiceData {
                 <tbody>
             """
             for (index, payment) in payments.enumerated() {
+                let payMag = String(format: "%.2f", abs(payment.amount))
+                let payStr = payment.amount < 0 ? "(€\(payMag))" : "€\(payMag)"
                 html += """
                         <tr>
                             <td style="padding:4px;">Betaling \(index + 1)</td>
-                            <td style="text-align:right; padding:4px;">€\(String(format: "%.2f", abs(payment.amount)))</td>
+                            <td style="text-align:right; padding:4px;">\(payStr)</td>
                         </tr>
                 """
             }
@@ -63,28 +67,35 @@ extension InvoiceData {
             """
         }
 
-        // Summary
         html += """
         <p class="emphasis-title" style="margin-top:24px;"><i>Samenvatting</i></p>
         <table style="width:100%; font-size:12px; border-collapse: collapse;">
             <tr>
                 <td style="font-weight:500; padding:4px;">Subtotaal</td>
-                <td style="text-align:right; padding:4px;">€\(String(format: "%.2f", abs(netTotal)))</td>
+        """
+        let netMag = String(format: "%.2f", abs(netTotal))
+        let netStr = netTotal < 0 ? "(€\(netMag))" : "€\(netMag)"
+        html += """
+                <td style="text-align:right; padding:4px;">\(netStr)</td>
             </tr>
         """
         if !payments.isEmpty {
+            let paidMag = String(format: "%.2f", abs(paymentTotal))
+            let paidStr = paymentTotal < 0 ? "(€\(paidMag))" : "€\(paidMag)"
             html += """
             <tr>
                 <td style="font-weight:500; padding:4px;">Reeds betaald</td>
-                <td style="text-align:right; padding:4px;">–€\(String(format: "%.2f", abs(paymentTotal)))</td>
+                <td style="text-align:right; padding:4px;">\(paidStr)</td>
             </tr>
             """
         }
+        let finalMag = String(format: "%.2f", abs(finalBalance))
+        let finalStr = finalBalance < 0 ? "(€\(finalMag))" : "€\(finalMag)"
         let label = finalBalance >= 0 ? "Te betalen" : "Te ontvangen"
         html += """
             <tr>
                 <td style="font-weight:700; padding:4px;">\(label)</td>
-                <td style="text-align:right; font-weight:700; padding:4px;">€\(String(format: "%.2f", abs(finalBalance)))</td>
+                <td style="text-align:right; font-weight:700; padding:4px;">\(finalStr)</td>
             </tr>
         </table>
         """
