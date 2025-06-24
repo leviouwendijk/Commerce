@@ -18,19 +18,15 @@ extension InvoiceData {
             <tbody>
         """
         for item in content {
-            let rowClass = item.parentId != nil ? "child-item" : ""
-            let rateMag = String(format: "%.2f", abs(item.rate))
-            let rateStr = item.rate < 0
-                ? "(€\(rateMag))"
-                : "€\(rateMag)"
+            let indentSymbol = item.parentId != nil ? "└─ " : ""
+            let rateMag     = String(format: "%.2f", abs(item.rate))
+            let rateStr     = item.rate < 0 ? "(€\(rateMag))" : "€\(rateMag)"
             let subtotalMag = String(format: "%.2f", abs(item.subtotal))
-            let subtotalStr = item.subtotal < 0
-                ? "(€\(subtotalMag))"
-                : "€\(subtotalMag)"
-
+            let subtotalStr = item.subtotal < 0 ? "(€\(subtotalMag))" : "€\(subtotalMag)"
+            
             html += """
-            <tr class="\(rowClass)">
-              <td style="padding:4px;">\(item.name)</td>
+            <tr>
+              <td style="padding:4px;">\(indentSymbol)\(item.name)</td>
               <td style="text-align:center; padding:4px;">\(item.count)</td>
               <td style="text-align:right; padding:4px;">\(rateStr)</td>
               <td style="text-align:right; padding:4px;">\(subtotalStr)</td>
