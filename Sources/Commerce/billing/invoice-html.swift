@@ -72,7 +72,7 @@ extension InvoiceData {
         <p class="emphasis-title" style="margin-top:24px;"><i>Samenvatting</i></p>
         <table style="width:100%; font-size:12px; border-collapse: collapse;">
             <tr>
-                <td style="font-weight:500; padding:4px;">Subtotaal</td>
+                <td style="font-weight:500; padding:4px;">Subtotaal geleverde goederen en diensten</td>
         """
         let netMag = String(format: "%.2f", abs(netTotal))
         let netStr = netTotal < 0 ? "(€\(netMag))" : "€\(netMag)"
