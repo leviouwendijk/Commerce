@@ -31,6 +31,14 @@ public struct InvoiceAddressDetail: Sendable {
 public struct InvoiceClientContactDetails: Sendable {
     public let email: String
     public let phone: String
+    
+    public init(
+        email: String,
+        phone: String
+    ) {
+        self.email = email
+        self.phone = phone
+    }
 }
 
 public struct InvoiceClientDetail: Sendable {
@@ -86,4 +94,14 @@ public struct InvoiceDetails: Sendable {
     public let client: InvoiceClientDetail
     public let dog: InvoiceDogDetail
     public let address: [InvoiceAddressDetail]
+    
+    public init(
+        client: InvoiceClientDetail,
+        dog: InvoiceDogDetail,
+        address: [InvoiceAddressDetail]
+    ) {
+        self.client = client
+        self.dog = dog
+        self.address = address
+    }
 }

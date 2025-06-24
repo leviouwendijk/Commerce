@@ -76,6 +76,18 @@ public struct InvoiceData: Identifiable, Sendable {
     public let details: InvoiceDetails
     public let content: [InvoiceLineItem]
     public let payments: [InvoicePayment]
+    
+    public init(
+        id: Int,
+        details: InvoiceDetails,
+        content: [InvoiceLineItem],
+        payments: [InvoicePayment]
+    ) {
+        self.id = id
+        self.details = details
+        self.content = content
+        self.payments = payments
+    }
 
     public var netTotal: Double {
         content.map(\.subtotal).reduce(0, +)
