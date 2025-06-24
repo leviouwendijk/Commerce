@@ -45,8 +45,8 @@ extension InvoiceData {
             <table class="payments-table">
               <thead>
                 <tr>
-                  <th style="text-align:left; padding:4px;">Omschrijving</th>
-                  <th style="text-align:right; padding:4px;">Bedrag</th>
+                  <th style="text-align:left; padding:4px;"></th>
+                  <th style="text-align:right; padding:4px;"></th>
                 </tr>
               </thead>
               <tbody>
