@@ -1,4 +1,5 @@
 import Foundation
+import Extensions
 
 extension InvoiceData {
     public var invoiceDataHTML: String {
@@ -111,7 +112,7 @@ extension InvoiceData {
         }
         let finalMag = String(format: "%.2f", abs(finalBalance))
         let finalStr = finalBalance < 0 ? "(€\(finalMag))" : "€\(finalMag)"
-        let label    = finalBalance >= 0 ? "Te betalen" : "Te ontvangen"
+        let label    = finalBalance.payableOrReceivableLabel
         html += """
           <tr>
             <td style="font-weight:700;">\(label)</td>
