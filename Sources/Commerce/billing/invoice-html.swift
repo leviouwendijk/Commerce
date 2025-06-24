@@ -112,7 +112,7 @@ extension InvoiceData {
         }
         let finalMag = String(format: "%.2f", abs(finalBalance))
         let finalStr = finalBalance < 0 ? "(€\(finalMag))" : "€\(finalMag)"
-        let label    = finalBalance.payableOrReceivableLabel
+        let label    = finalBalance.payableOrReceivable().overviewLabel()
         html += """
           <tr>
             <td style="font-weight:700;">\(label)</td>
