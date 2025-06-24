@@ -58,8 +58,6 @@ extension InvoiceData {
             <table class="payments-table">
               <thead>
                 <tr>
-                  <th style="text-align:left;"></th>
-                  <th style="text-align:right;"></th>
                 </tr>
               </thead>
               <tbody>
