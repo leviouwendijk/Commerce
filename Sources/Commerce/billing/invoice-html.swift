@@ -3,16 +3,17 @@ import Foundation
 extension InvoiceData {
     public var invoiceDataHTML: String {
         var html = ""
-        
+
+        // Line items
         html += """
         <p class="emphasis-title"><i>Specificatie</i></p>
         <table class="line-items-table">
             <thead>
                 <tr>
-                    <th style="text-align:left; padding:4px;">Omschrijving</th>
-                    <th style="text-align:center; padding:4px;">Aantal</th>
-                    <th style="text-align:right; padding:4px;">Tarief</th>
-                    <th style="text-align:right; padding:4px;">Subtotaal</th>
+                    <th style="text-align:left;">Omschrijving</th>
+                    <th style="text-align:center;">Aantal</th>
+                    <th style="text-align:right;">Tarief</th>
+                    <th style="text-align:right;">Subtotaal</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,10 +27,10 @@ extension InvoiceData {
             
             html += """
             <tr>
-              <td style="padding:4px;">\(indentSymbol)\(item.name)</td>
-              <td class="col-amount" style="text-align:center; padding:4px;">\(item.count)</td>
-              <td class="col-rate"   style="text-align:right; padding:4px;">\(rateStr)</td>
-              <td style="text-align:right; padding:4px;">\(subtotalStr)</td>
+              <td>\(indentSymbol)\(item.name)</td>
+              <td class="col-amount" style="text-align:center;">\(item.count)</td>
+              <td class="col-rate"   style="text-align:right;">\(rateStr)</td>
+              <td style="text-align:right;">\(subtotalStr)</td>
             </tr>
             """
         }
@@ -50,14 +51,15 @@ extension InvoiceData {
         
         """
 
+        // Payments
         if !payments.isEmpty {
             html += """
             <p class="emphasis-title" style="margin-top:24px;"><i>Betalingen</i></p>
             <table class="payments-table">
               <thead>
                 <tr>
-                  <th style="text-align:left; padding:4px;"></th>
-                  <th style="text-align:right; padding:4px;"></th>
+                  <th style="text-align:left;"></th>
+                  <th style="text-align:right;"></th>
                 </tr>
               </thead>
               <tbody>
@@ -67,8 +69,8 @@ extension InvoiceData {
                 let amtStr = payment.amount < 0 ? "(€\(amtMag))" : "€\(amtMag)"
                 html += """
                   <tr>
-                    <td style="padding:4px;">\(payment.details)</td>
-                    <td style="text-align:right; padding:4px;">\(amtStr)</td>
+                    <td>\(payment.details)</td>
+                    <td style="text-align:right;">\(amtStr)</td>
                   </tr>
                 """
             }
