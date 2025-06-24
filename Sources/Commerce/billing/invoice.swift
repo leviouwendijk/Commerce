@@ -98,6 +98,6 @@ public struct InvoiceData: Identifiable, Sendable {
     }
 
     public var finalBalance: Double {
-        netTotal - paymentTotal
+        netTotal + paymentTotal
     }
 }
