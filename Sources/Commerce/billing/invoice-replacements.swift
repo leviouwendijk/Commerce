@@ -74,12 +74,12 @@ extension InvoiceData {
             ),
             StringTemplateReplacement(
                 placeholders: ["document_label"],
-                replacement: dateString,
+                replacement: self.finalBalance.payableOrReceivable().documentLabel(),
                 initializer: .auto
             ),
             StringTemplateReplacement(
                 placeholders: ["invoice_data"],
-                replacement: self.finalBalance.payableOrReceivable().documentLabel(),
+                replacement: invoiceDataHTML,
                 initializer: .auto
             )
         ]
