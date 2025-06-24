@@ -27,8 +27,8 @@ extension InvoiceData {
             html += """
             <tr>
               <td style="padding:4px;">\(indentSymbol)\(item.name)</td>
-              <td style="text-align:center; padding:4px;">\(item.count)</td>
-              <td style="text-align:right; padding:4px;">\(rateStr)</td>
+              <td class="col-amount" style="text-align:center; padding:4px;">\(item.count)</td>
+              <td class="col-rate"   style="text-align:right; padding:4px;">\(rateStr)</td>
               <td style="text-align:right; padding:4px;">\(subtotalStr)</td>
             </tr>
             """
