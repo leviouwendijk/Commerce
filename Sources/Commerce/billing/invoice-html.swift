@@ -54,7 +54,7 @@ extension InvoiceData {
         // Payments
         if !payments.isEmpty {
             html += """
-            <p class="emphasis-title" style="margin-top:24px;"><i>Betalingen</i></p>
+            <p class="emphasis-title"><i>Betalingen</i></p>
             <table class="payments-table">
               <thead>
                 <tr>
@@ -92,7 +92,7 @@ extension InvoiceData {
 
         // Samenvatting
         html += """
-        <p class="emphasis-title" style="margin-top:24px;"><i>Samenvatting</i></p>
+        <p class="emphasis-title"><i>Samenvatting</i></p>
         <table class="final-overview-table">
           <tr>
             <td style="font-weight:500;">Som leverbare goederen en diensten</td>
