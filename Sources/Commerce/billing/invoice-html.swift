@@ -38,9 +38,9 @@ extension InvoiceData {
         let netMag = String(format: "%.2f", abs(netTotal))
         let netStr = netTotal < 0 ? "(€\(netMag))" : "€\(netMag)"
         html += """
-            <tr class="line-items-total-row">
-              <td colspan="3" class="line-items-total-label">Totaal</td>
-              <td class="line-items-total-value">\(netStr)</td>
+            <tr class="table-subtotal-row">
+              <td colspan="3" class="table-subtotal-label">Totaal</td>
+              <td class="table-subtotal-value">\(netStr)</td>
             </tr>
         """
 
@@ -77,9 +77,9 @@ extension InvoiceData {
             let paidMag = String(format: "%.2f", abs(paymentTotal))
             let paidStr = paymentTotal < 0 ? "(€\(paidMag))" : "€\(paidMag)"
             html += """
-                  <tr class="payments-total-row">
-                    <td class="payments-total-label">Totaal betalingen</td>
-                    <td class="payments-total-value">\(paidStr)</td>
+                  <tr class="table-subtotal-row">
+                    <td class="table-subtotal-label">Totaal betalingen</td>
+                    <td class="table-subtotal-value">\(paidStr)</td>
                   </tr>
             """
 
