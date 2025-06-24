@@ -6,7 +6,7 @@ extension InvoiceData {
         
         html += """
         <p class="emphasis-title"><i>Specificatie</i></p>
-        <table style="width:100%; font-size:12px; border-collapse: collapse;">
+        <table class="line-items-table">
             <thead>
                 <tr>
                     <th style="text-align:left; padding:4px;">Omschrijving</th>
@@ -42,7 +42,7 @@ extension InvoiceData {
         if !payments.isEmpty {
             html += """
             <p class="emphasis-title" style="margin-top:24px;"><i>Betalingen</i></p>
-            <table style="width:100%; font-size:12px; border-collapse: collapse;">
+            <table class="payments-table">
               <thead>
                 <tr>
                   <th style="text-align:left; padding:4px;">Omschrijving</th>
@@ -71,7 +71,7 @@ extension InvoiceData {
         // Samenvatting
         html += """
         <p class="emphasis-title" style="margin-top:24px;"><i>Samenvatting</i></p>
-        <table style="width:100%; font-size:12px; border-collapse: collapse;">
+        <table class="final-overview-table">
           <tr>
             <td style="font-weight:500; padding:4px;">Som geleverde goederen en diensten</td>
             <td style="text-align:right; padding:4px;">\(netTotal < 0 ? "(€\(String(format: "%.2f", abs(netTotal)))" : "€\(String(format: "%.2f", netTotal))")</td>
