@@ -85,7 +85,7 @@ extension InvoiceData {
             let paidStr = paymentTotal < 0 ? "(€\(paidMag))" : "€\(paidMag)"
             html += """
             <tr>
-                <td style="font-weight:500; padding:4px;">Reeds betaald</td>
+                <td style="font-weight:500; padding:4px;">Reeds voldane betalingen</td>
                 <td style="text-align:right; padding:4px;">\(paidStr)</td>
             </tr>
             """
