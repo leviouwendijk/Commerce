@@ -1,7 +1,7 @@
 import Foundation
 import plate
 
-extension InvoiceData {
+extension CertificationData {
     public func replacements() -> [StringTemplateReplacement] {
         let billing = details.address.first(where: { $0.type == .billing })
 
@@ -79,14 +79,19 @@ extension InvoiceData {
             ),
             StringTemplateReplacement(
                 placeholders: ["document_label"],
-                replacement: self.finalBalance.payableOrReceivable().documentLabel(),
+                replacement: "Certification",
                 initializer: .auto
             ),
             StringTemplateReplacement(
-                placeholders: ["invoice_data"],
-                replacement: invoiceDataHTML,
+                placeholders: ["training_date_range"],
+                replacement: trainingDateRange,
                 initializer: .auto
             )
+            // StringTemplateReplacement(
+            //     placeholders: ["invoice_data"],
+            //     replacement: invoiceDataHTML,
+            //     initializer: .auto
+            // )
         ]
     }
 }

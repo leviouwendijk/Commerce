@@ -75,17 +75,20 @@ public struct InvoiceDogDetail: Sendable {
     public let name: String
     public let chip: String?
     public let breed: String?
+    public let passport: String?
     public let birthdate: String?
     
     public init(
         name: String,
         chip: String?,
         breed: String?,
+        passport: String?,
         birthdate: String?
     ) {
         self.name = name
         self.chip = chip
         self.breed = breed
+        self.passport = passport
         self.birthdate = birthdate
     }
 }
