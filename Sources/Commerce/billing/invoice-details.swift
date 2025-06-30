@@ -80,10 +80,10 @@ public struct InvoiceDogDetail: Sendable {
     
     public init(
         name: String,
-        chip: String?,
-        breed: String?,
-        passport: String?,
-        birthdate: String?
+        chip: String? = nil,
+        breed: String? = nil,
+        passport: String? = nil,
+        birthdate: String? = nil
     ) {
         self.name = name
         self.chip = chip
