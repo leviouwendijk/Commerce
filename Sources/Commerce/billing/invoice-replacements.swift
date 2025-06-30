@@ -18,6 +18,11 @@ extension InvoiceData {
                 initializer: .auto
             ),
             StringTemplateReplacement(
+                placeholders: ["client_names_inline"],
+                replacement: details.client.fullName.strippingBreaks(),
+                initializer: .auto
+            ),
+            StringTemplateReplacement(
                 placeholders: ["client_email"],
                 replacement: details.client.contact.email,
                 initializer: .auto
