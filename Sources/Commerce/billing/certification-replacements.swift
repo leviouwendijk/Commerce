@@ -13,6 +13,11 @@ extension CertificationData {
 
         return [
             StringTemplateReplacement(
+                placeholders: ["location"],
+                replacement: issueLocation,
+                initializer: .auto
+            ),
+            StringTemplateReplacement(
                 placeholders: ["client_fullname"],
                 replacement: details.client.fullName,
                 initializer: .auto
