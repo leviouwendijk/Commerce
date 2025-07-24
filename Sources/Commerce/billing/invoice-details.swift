@@ -1,7 +1,7 @@
 import Foundation
 import plate
 
-public enum InvoiceAddressType: Sendable, Codable {
+public enum InvoiceAddressType: String, RawRepresentable, Sendable, Codable {
     case billing
     case shipping
 }
