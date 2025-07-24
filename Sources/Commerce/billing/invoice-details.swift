@@ -1,12 +1,12 @@
 import Foundation
 import plate
 
-public enum InvoiceAddressType: Sendable {
+public enum InvoiceAddressType: Sendable, Codable {
     case billing
     case shipping
 }
 
-public struct InvoiceAddressDetail: Sendable {
+public struct InvoiceAddressDetail: Sendable, Codable {
     public let type: InvoiceAddressType
     public let street: String // Some Street
     public let number: String // 51
@@ -28,7 +28,7 @@ public struct InvoiceAddressDetail: Sendable {
     }
 }
 
-public struct InvoiceClientContactDetails: Sendable {
+public struct InvoiceClientContactDetails: Sendable, Codable {
     public let email: String
     public let phone: String
     
@@ -41,7 +41,7 @@ public struct InvoiceClientContactDetails: Sendable {
     }
 }
 
-public struct InvoiceClientDetail: Sendable {
+public struct InvoiceClientDetail: Sendable, Codable {
     public let name: String
     public let infix: String?
     public let middle: String?
@@ -71,7 +71,7 @@ public struct InvoiceClientDetail: Sendable {
     }
 }
 
-public struct InvoiceDogDetail: Sendable {
+public struct InvoiceDogDetail: Sendable, Codable {
     public let name: String
     public let chip: String?
     public let breed: String?
@@ -93,7 +93,7 @@ public struct InvoiceDogDetail: Sendable {
     }
 }
 
-public struct InvoiceDetails: Sendable {
+public struct InvoiceDetails: Sendable, Codable {
     public let client: InvoiceClientDetail
     public let dog: InvoiceDogDetail
     public let address: [InvoiceAddressDetail]

@@ -135,7 +135,7 @@ public struct InvoiceLineItem: Identifiable, Sendable, Codable {
     }
 }
 
-public struct InvoicePayment: Identifiable, Sendable {
+public struct InvoicePayment: Identifiable, Sendable, Codable {
     public let id: UUID
     public let details: String
     public let amount: Double
@@ -151,7 +151,7 @@ public struct InvoicePayment: Identifiable, Sendable {
     }
 }
 
-public struct InvoiceData: Identifiable, Sendable {
+public struct InvoiceData: Identifiable, Sendable, Codable {
     public let id: Int
     public let details: InvoiceDetails
     public let content: [InvoiceLineItem]
