@@ -77,6 +77,41 @@ public struct InvoiceLineItemUnit: Sendable, Codable {
         self.vat = VATObject(rate: vatRate, gross: gross)
         self.net = gross.vat(vatRate, using: .gross, returning: .revenue)
     }
+
+    enum CodingKeys: String, CodingKey {
+        case gross, net, vat, vatRate
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let gross = try c.decode(Double.self, forKey: .gross)
+
+        if c.contains(.vatRate) {
+            // payload: { gross, vatRate }
+            let rate = try c.decode(Double.self, forKey: .vatRate)
+            self = InvoiceLineItemUnit(gross: gross, vatRate: rate)
+
+        } else if c.contains(.net) && c.contains(.vat) {
+            // payload: { gross, net, vat: { rate, tax } }
+            let net = try c.decode(Double.self, forKey: .net)
+            let vat = try c.decode(VATObject.self, forKey: .vat)
+            self = InvoiceLineItemUnit(gross: gross, net: net, vat: vat)
+
+        } else {
+            throw DecodingError.dataCorruptedError(
+                forKey: .gross,
+                in: c,
+                debugDescription: "InvoiceLineItemUnit needs either (gross,vatRate) or (gross,net,vat)."
+            )
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(gross, forKey: .gross)
+        try c.encode(net,     forKey: .net)
+        try c.encode(vat,     forKey: .vat)
+    }
 }
 
 public struct InvoiceLineItemSubtotal: Sendable, Codable {
