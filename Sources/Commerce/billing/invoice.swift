@@ -2,6 +2,7 @@ import Foundation
 import plate
 import Structures
 import Extensions
+import Economics
 
 public enum InvoiceLineItemError: Error, Sendable {
     case negativeRateNotAllowed
@@ -23,14 +24,90 @@ public enum InvoiceLineItemError: Error, Sendable {
 //     }
 // }
 
-public struct InvoiceLineItem: Identifiable, Sendable {
+public struct VATObject: Sendable, Codable {
+    public let rate: Double
+    public let tax: Double
+    
+    public init(
+        rate: Double,
+        gross: Double
+    ) {
+        self.rate = rate
+        self.tax = gross.vat(rate)
+    }
+
+    public init(
+        rate: Double,
+        net: Double
+    ) {
+        self.rate = rate
+        self.tax = net.vat(rate, using: .net, returning: .vat)
+    }
+}
+
+public struct InvoiceLineItemUnit: Sendable, Codable {
+    public let gross: Double
+    public let net: Double
+    public let vat: VATObject
+
+    public init(
+        gross: Double,
+        net: Double,
+        vat: VATObject
+    ) {
+        self.gross = gross
+        self.net = net
+        self.vat = vat
+    }
+    
+    public init(
+        net: Double,
+        vatRate: Double
+    ) {
+        self.net = net
+        self.vat = VATObject(rate: vatRate, net: net)
+        self.gross = net.vat(vatRate, using: .net, returning: .receivable)
+    }
+    
+    public init(
+        gross: Double,
+        vatRate: Double
+    ) {
+        self.gross = gross
+        self.vat = VATObject(rate: vatRate, gross: gross)
+        self.net = gross.vat(vatRate, using: .gross, returning: .revenue)
+    }
+}
+
+public struct InvoiceLineItemSubtotal: Sendable, Codable {
+    public let gross: Double
+    public let net: Double
+    public let vat: Double
+    
+    public init(
+        unit: InvoiceLineItemUnit,
+        count: Double,
+        direction: ValueDirection
+    ) {
+        let orientedGross = unit.gross.orient(to: direction)
+        let orientedNet   = unit.net.orient(to: direction)
+        let orientedVat   = unit.vat.tax.orient(to: direction)
+
+        self.gross = orientedGross * count
+        self.net   = orientedNet * count
+        self.vat   = orientedVat * count
+    }
+}
+
+public struct InvoiceLineItem: Identifiable, Sendable, Codable {
     public let id: UUID
     public let parentId: UUID?
     public let name: String
     public let direction: ValueDirection
     public let count: Double
-    public let rate: Double
-    public let subtotal: Double
+    // public let rate: Double
+    public let unit: InvoiceLineItemUnit
+    public let subtotal: InvoiceLineItemSubtotal
     
     public init(
         id: UUID = UUID(),
@@ -38,13 +115,13 @@ public struct InvoiceLineItem: Identifiable, Sendable {
         name: String,
         direction: ValueDirection,
         count: Double,
-        rate: Double
+        unit: InvoiceLineItemUnit
     ) throws {
         guard count >= 0 else {
             throw InvoiceLineItemError.negativeCountNotAllowed
         }
 
-        guard rate >= 0 else {
+        guard unit.gross >= 0 else {
             throw InvoiceLineItemError.negativeRateNotAllowed
         }
 
@@ -53,8 +130,8 @@ public struct InvoiceLineItem: Identifiable, Sendable {
         self.name = name
         self.direction = direction
         self.count = count
-        self.rate = ( rate.orient(to: direction) )
-        self.subtotal = (count * self.rate)
+        self.unit = unit
+        self.subtotal = InvoiceLineItemSubtotal(unit: unit, count: count, direction: direction)
     }
 }
 
@@ -93,7 +170,15 @@ public struct InvoiceData: Identifiable, Sendable {
     }
 
     public var netTotal: Double {
-        content.map(\.subtotal).reduce(0, +)
+        content.map(\.subtotal.net).reduce(0, +)
+    }
+
+    public var vatTotal: Double {
+        content.map(\.subtotal.vat).reduce(0, +)
+    }
+
+    public var reconcilableTotal: Double {
+        content.map(\.subtotal.gross).reduce(0, +)
     }
 
     public var paymentTotal: Double {
@@ -101,6 +186,6 @@ public struct InvoiceData: Identifiable, Sendable {
     }
 
     public var finalBalance: Double {
-        netTotal + paymentTotal
+        reconcilableTotal + paymentTotal
     }
 }

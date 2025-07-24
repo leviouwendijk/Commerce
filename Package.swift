@@ -27,6 +27,11 @@ let package = Package(
             url: "https://github.com/leviouwendijk/Extensions.git",
             branch: "master"
         ),
+
+        .package(
+            url: "https://github.com/leviouwendijk/Economics.git",
+            branch: "master"
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -37,6 +42,7 @@ let package = Package(
                 .product(name: "plate", package: "plate"),
                 .product(name: "Structures", package: "Structures"),
                 .product(name: "Extensions", package: "Extensions"),
+                .product(name: "Economics", package: "Economics"),
             ],
             // exclude: [
             //     "pricing/old-custom-quote.swift.bak"
@@ -49,6 +55,7 @@ let package = Package(
                 .product(name: "plate", package: "plate"),
                 .product(name: "Structures", package: "Structures"),
                 .product(name: "Extensions", package: "Extensions"),
+                .product(name: "Economics", package: "Economics"),
             ]
         ),
     ]
