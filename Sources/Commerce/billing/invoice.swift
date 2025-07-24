@@ -168,19 +168,19 @@ public struct InvoiceLineItem: Identifiable, Sendable, Codable {
         self.unit = unit
         self.subtotal = InvoiceLineItemSubtotal(unit: unit, count: count, direction: direction)
     }
+
     enum CodingKeys: String, CodingKey {
         case id, parentId, name, direction, count, unit
-        // omit "subtotal"
     }
 
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        let id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
-        let parentId = try c.decodeIfPresent(UUID.self, forKey: .parentId)
-        let name = try c.decode(String.self,    forKey: .name)
+        let id                = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        let parentId    = try c.decodeIfPresent(UUID.self, forKey: .parentId)
+        let name            = try c.decode(String.self,    forKey: .name)
         let direction = try c.decode(ValueDirection.self, forKey: .direction)
-        let count = try c.decode(Double.self,    forKey: .count)
-        let unit = try InvoiceLineItemUnit(from: decoder) 
+        let count         = try c.decode(Double.self,    forKey: .count)
+        let unit            = try c.decode(InvoiceLineItemUnit.self, forKey: .unit)
 
         try self.init(
             id:                id,
@@ -190,6 +190,16 @@ public struct InvoiceLineItem: Identifiable, Sendable, Codable {
             count:         count,
             unit:            unit
         )
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(id,                forKey: .id)
+        try c.encode(parentId,    forKey: .parentId)
+        try c.encode(name,            forKey: .name)
+        try c.encode(direction, forKey: .direction)
+        try c.encode(count,         forKey: .count)
+        try c.encode(unit,            forKey: .unit)
     }
 }
 
