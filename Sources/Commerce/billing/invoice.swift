@@ -168,6 +168,29 @@ public struct InvoiceLineItem: Identifiable, Sendable, Codable {
         self.unit = unit
         self.subtotal = InvoiceLineItemSubtotal(unit: unit, count: count, direction: direction)
     }
+    enum CodingKeys: String, CodingKey {
+        case id, parentId, name, direction, count, unit
+        // omit "subtotal"
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        let parentId = try c.decodeIfPresent(UUID.self, forKey: .parentId)
+        let name = try c.decode(String.self,    forKey: .name)
+        let direction = try c.decode(ValueDirection.self, forKey: .direction)
+        let count = try c.decode(Double.self,    forKey: .count)
+        let unit = try InvoiceLineItemUnit(from: decoder) 
+
+        try self.init(
+            id:                id,
+            parentId:    parentId,
+            name:            name,
+            direction: direction,
+            count:         count,
+            unit:            unit
+        )
+    }
 }
 
 public struct InvoicePayment: Identifiable, Sendable, Codable {
