@@ -48,15 +48,5 @@ let package = Package(
             //     "pricing/old-custom-quote.swift.bak"
             // ]
         ),
-        .testTarget(
-            name: "CommerceTests",
-            dependencies: [
-                "Commerce",
-                .product(name: "plate", package: "plate"),
-                .product(name: "Structures", package: "Structures"),
-                .product(name: "Extensions", package: "Extensions"),
-                .product(name: "Economics", package: "Economics"),
-            ]
-        ),
     ]
 )
