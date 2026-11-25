@@ -13,7 +13,7 @@
     {
       "identity" : "extensions",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/leviouwendijk/Extensions.git",
+      "location" : "https://github.com/swift-lco/Extensions.git",
       "state" : {
         "branch" : "master",
         "revision" : "3310d463b1bc509cccd8e75f0acc221e153f5dff"
@@ -31,7 +31,7 @@
     {
       "identity" : "structures",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/leviouwendijk/Structures.git",
+      "location" : "https://github.com/swift-lco/Structures.git",
       "state" : {
         "branch" : "master",
         "revision" : "3ac509687b6e5daaec7db7a5f7fbb677db7ba41d"
